@@ -4,7 +4,7 @@ if(!process.env.ENV) {
   console.log("No environment value specified...");
 }
 
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const environment = process.env.ENV as string;
 const config = require("../config/dbConf.json")[environment]["mysql"];
 

@@ -1,5 +1,3 @@
-import { faker } from "@faker-js/faker";
-
 import { User } from "../../src/user/user";
 
 const escolaridad =[
@@ -2326,7 +2324,7 @@ function randomInt(min: number, max: number): number {
   return Math.floor((Math.random() * (max - min + 1)) + min);
 }
 
-function createRandomUser(): User {
+function createRandomUser(faker): User {
   type sex = 'female' | 'male' | undefined;
   const gender = faker.person.sex(),
         municipality = faker.location.city(),
@@ -2377,6 +2375,4 @@ function createRandomUser(): User {
   };
 };
 
-console.log("Hola Ramiro");
 console.log(createRandomUser());
-console.log("Todos tienen sida");
