@@ -1,4 +1,4 @@
-const conn = require("");
+import { connection } from "../config/connection";
 
 const user_model = {};
 

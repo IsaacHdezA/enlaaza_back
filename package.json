@@ -4,8 +4,8 @@
   "description": "Backend for my little recommender system",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "seed": "node ./database/seed.ts"
+    "start": "ts-node src/app.ts",
+    "seed": "ts-node -r dotenv/config ./database/seed.ts"
   },
   "author": "IscMalloc",
   "license": "ISC",
@@ -25,6 +25,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/http-status-codes": "^1.2.0",
+    "@types/node": "^20.12.7",
     "http-status-codes": "^2.3.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.4"
