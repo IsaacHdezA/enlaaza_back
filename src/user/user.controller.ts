@@ -1,19 +1,16 @@
-import { connection } from "../config/connection";
+import { User } from "./user";
+import { userModel } from "./user.model";
+import { Request, Response }  from "express";
 
-const user_model = {};
+const userControl = () => {};
 
-user_model.addUser = (data, callback) => {
-  conn.query(
-    `
-    INSERT INTO enlaaza_db.usuario(
+userControl.getAllUsers = async (req: Request, res: Response) => {
+	let users: User[] = [];
 
-    )
-    VALUES ();`, data, callback
-  );
+	users = await userModel.getAllUsers();
+	res.json({
+		users: users
+	});
 };
 
-user_model.getUsers = (data, callback) => {
-
-};
-
-module.exports = user_model;
+export { userControl };

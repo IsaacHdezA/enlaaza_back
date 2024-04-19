@@ -1,6 +1,8 @@
-const express = require("express");
+import * as express from "express";
+import { userControl } from "./user.controller";
+
 const route = express.Router();
 
-const user_controller = require("./user.controller.ts");
+route.get("/all", userControl.getAllUsers);
 
-route.get("", );
+export { route };

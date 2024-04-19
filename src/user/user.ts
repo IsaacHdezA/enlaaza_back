@@ -1,4 +1,6 @@
-export interface User {
+import { RowDataPacket } from "mysql2";
+
+export interface User extends RowDataPacket {
   fechaRegistro: string;
   motivoRegistro?: string;
   registroCompleto?: boolean;
