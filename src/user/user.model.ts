@@ -12,9 +12,8 @@ userModel.getAllUsers = async (): Promise<User[]> => {
 	try {
 		response = (await db.execute("SELECT * FROM usuario;"));
 		users = response[0] as User[];
-
 	} catch(e) {
-		console.log('Chingas a tu puta madre');
+		console.log(`Error: ${e}`);
 	}
 
 	return users;

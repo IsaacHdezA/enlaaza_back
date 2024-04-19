@@ -5,14 +5,35 @@ import { createRandomUser } from "../factories/user.factory";
 const userSeeder = async (db: PoolConnection, faker: any, maxUsers: number) => {
   let sql = `
     INSERT INTO enlaaza_db.usuario(
-      usr_fechaRegistro, usr_nombre, usr_apellidos, usr_curp, usr_fecNac,
-      usr_edad, usr_genero, usr_correoElectronico, usr_telefono,
-      usr_municipio, usr_calle, usr_numero, usr_colonia, usr_codigoPostal,
-      usr_escolaridad, usr_plantel, usr_idiomas, usr_habilidadesBlandas,
-      usr_habilidadesTecnicas, usr_actividadActual, usr_buscaEmpleo,
-      usr_trabajando, usr_disponibilidadViaje, usr_disponibilidadRadicar,
-      usr_buscaOpcion1, usr_buscaOpcion2, usr_buscaOpcion3,
-      usr_numeroSeguroSocial, usr_motivoRegistro
+      fechaRegistro,
+      nombre,
+      apellidos,
+      curp,
+      fecNac,
+      edad,
+			genero,
+			correoElectronico,
+			telefono,
+      municipio,
+			calle,
+			numero,
+			colonia,
+			codigoPostal,
+      escolaridad,
+			plantel,
+			idiomas,
+			habilidadesBlandas,
+      habilidadesTecnicas,
+			actividadActual,
+			buscaEmpleo,
+      trabajando,
+			disponibilidadViaje,
+			disponibilidadRadicar,
+      buscaOpcion1,
+			buscaOpcion2,
+			buscaOpcion3,
+      numeroSeguroSocial,
+			motivoRegistro
     ) VALUES `;
 
   let user: User;
@@ -27,8 +48,8 @@ const userSeeder = async (db: PoolConnection, faker: any, maxUsers: number) => {
                 "${user.fecNac}",
                 "${user.edad}",
                 ${user.genero ? 1 : 0},
-                "${user.telefono}",
                 "${user.correoElectronico}",
+                "${user.telefono}",
                 "${user.municipio}",
                 "${user.calle}",
                 "${user.numero}",
