@@ -1,6 +1,6 @@
 import { User } from "./user";
 import { userModel } from "./user.model";
-import { Request, Response }  from "express";
+import { Request, Response } from "express";
 
 const userControl = () => {};
 
