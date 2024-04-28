@@ -1,5 +1,5 @@
 export interface Vacancy {
-  fechaRegistro: Date;
+  fechaRegistro: string;
   vigencia: string;
   nombreEmpresa: string;
   rfcEmpresa: string;
@@ -17,7 +17,7 @@ export interface Vacancy {
   tipoEmpleo: string;
   tipoContrato: string;
   modalidad: string;
-  diasLaborales: number[];
+  diasLaborales: string[];
   horario: string;
   nivelPuesto: string;
   prestaciones: string[];
@@ -46,5 +46,5 @@ export interface Vacancy {
   tipoSueldo?: string;
   generoPreferible?: string;
 
-  calificacionExplain: number;
+  calificacion: number;
 }
