@@ -6,17 +6,30 @@ const userModel = () => {};
 
 userModel.getAllUsers = async (): Promise<User[]> => {
 	const db = connection.promise();
-	let response: [QueryResult, FieldPacket[]];
 	let users: User[] = [];
 
 	try {
-		response = (await db.execute("SELECT * FROM usuario;"));
-		users = response[0] as User[];
+		const [response,] = (await db.execute("SELECT * FROM usuario;"));
+		users = response as User[];
 	} catch(e) {
 		console.log(`Error: ${e}`);
 	}
 
 	return users;
+}
+
+userModel.getUserById = async (id: number): Promise<User | null> => {
+	const db = connection.promise();
+	let user: User | null = null;
+
+	try {
+		const [response, ] = (await db.execute(`SELECT * FROM usuario WHERE userId = ?`, [id]))
+		user = response as any as User;
+	} catch(e) {
+		console.log(`Error: ${e}`);
+	}
+
+	return user;
 }
 
 export { userModel };

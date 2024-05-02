@@ -4,7 +4,7 @@
   "description": "Backend for my little recommender system",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/app.ts",
+    "start": "nodemon src/app.ts",
     "seed": "ts-node -r dotenv/config ./database/seed.ts"
   },
   "author": "IscMalloc",

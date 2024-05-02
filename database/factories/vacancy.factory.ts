@@ -1,6 +1,6 @@
 import { Vacancy } from "../../src/vacancies/vacancy";
-import { catalog } from "../utilities/catalog";
-import utils from "../utilities/utils";
+import { catalog } from "../../src/utilities/catalog";
+import utils from "../../src/utilities/utils";
 
 function createRandomVacancy(faker: any): Vacancy {
   return {

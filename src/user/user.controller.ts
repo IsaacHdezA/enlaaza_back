@@ -1,18 +1,17 @@
 import { User } from "./user";
 import { userModel } from "./user.model";
 import { Request, Response } from "express";
+import utils from "../utilities/utils";
 
 const userControl = () => {};
 
 userControl.getAllUsers = async (req: Request, res: Response) => {
 	let users: User[] = [];
 
-  const toISODate = (date: Date) => date.toISOString().slice(0, 19).replace("T", " ");
-
 	users = await userModel.getAllUsers();
 	users.forEach(user => {
-		user.fechaRegistro = toISODate(new Date(user.fechaRegistro));
-		user.fecNac = toISODate(new Date(user.fecNac));
+		user.fechaRegistro = utils.toISODate(new Date(user.fechaRegistro));
+		user.fecNac = utils.toISODate(new Date(user.fecNac));
 
 		// @ts-ignore
 		user.idiomas = user.idiomas.split(",");
@@ -26,5 +25,14 @@ userControl.getAllUsers = async (req: Request, res: Response) => {
 
 	res.send(users);
 };
+
+userControl.getUserById = async (req: Request, res: Response) => {
+	let user: User | null;
+	const id: number = req.params.id as any as number;
+
+	user = (await userModel.getUserById(id)) as User;
+
+	res.send(user);
+}
 
 export { userControl };

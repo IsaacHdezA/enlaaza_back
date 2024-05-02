@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker/locale/es";
-import { Pool, PoolConnection } from "mysql2";
+import { PoolConnection } from "mysql2";
 import { connection } from "../src/config/connection";
 import { userSeeder } from "./seeders/user.seeder";
 import { vacancySeeder } from "./seeders/vacancy.seeder";

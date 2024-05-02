@@ -1,6 +1,6 @@
 import { User } from "../../src/user/user";
-import { catalog } from "../utilities/catalog";
-import utils from "../utilities/utils";
+import { catalog } from "../../src/utilities/catalog";
+import utils from "../../src/utilities/utils";
 
 function createRandomUser(faker: any): User {
   type sex = 'female' | 'male' | undefined;

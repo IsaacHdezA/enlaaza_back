@@ -1,6 +1,5 @@
-import { RowDataPacket } from "mysql2";
-
 export interface User {
+  userId?: number;
   fechaRegistro: string;
   motivoRegistro?: string;
   registroCompleto?: boolean;
