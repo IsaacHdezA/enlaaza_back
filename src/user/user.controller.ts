@@ -30,9 +30,21 @@ userControl.getUserById = async (req: Request, res: Response) => {
 	let user: User | null;
 	const id: number = req.params.id as any as number;
 
-	user = (await userModel.getUserById(id)) as User;
+	user = (await userModel.getUserById(id));
 
-	res.send(user);
+	if(Array.isArray(user) && user.length > 0) {
+		user[0].fechaRegistro = utils.toISODate(new Date(user[0].fechaRegistro));
+		user[0].fecNac = utils.toISODate(new Date(user[0].fecNac));
+		user[0].idiomas = user[0].idiomas.split(",");
+		user[0].habilidadesBlandas = user[0].habilidadesBlandas.split(",");
+		user[0].habilidadesTecnicas = user[0].habilidadesTecnicas.split(",");
+
+		res.send(user[0]);
+
+		return;
+	}
+
+	res.send(null);
 }
 
 export { userControl };
