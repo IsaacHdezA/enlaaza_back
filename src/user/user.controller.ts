@@ -6,31 +6,33 @@ import utils from "../utilities/utils";
 const userControl = () => {};
 
 userControl.getAllUsers = async (req: Request, res: Response) => {
-	let users: User[] = [];
+	let users: User[] | null = [];
 
 	users = await userModel.getAllUsers();
-	users.forEach(user => {
-		user.fechaRegistro = utils.toISODate(new Date(user.fechaRegistro));
-		user.fecNac = utils.toISODate(new Date(user.fecNac));
+	if(users) {
+		users.forEach(user => {
+			user.fechaRegistro = utils.toISODate(new Date(user.fechaRegistro));
+			user.fecNac = utils.toISODate(new Date(user.fecNac));
 
-		// @ts-ignore
-		user.idiomas = user.idiomas.split(",");
+			// @ts-ignore
+			user.idiomas = user.idiomas.split(",");
 
-		// @ts-ignore
-		user.habilidadesBlandas = user.habilidadesBlandas.split(",");
+			// @ts-ignore
+			user.habilidadesBlandas = user.habilidadesBlandas.split(",");
 
-		// @ts-ignore
-		user.habilidadesTecnicas = user.habilidadesTecnicas.split(",");
-	});
+			// @ts-ignore
+			user.habilidadesTecnicas = user.habilidadesTecnicas.split(",");
+		});
+	}
 
 	res.send(users);
 };
 
 userControl.getUserById = async (req: Request, res: Response) => {
-	let user: User | null;
+	let user: User | null = null;
 	const id: number = req.params.id as any as number;
 
-	user = (await userModel.getUserById(id));
+	user = await userModel.getUserById(id);
 
 	if(Array.isArray(user) && user.length > 0) {
 		user[0].fechaRegistro = utils.toISODate(new Date(user[0].fechaRegistro));

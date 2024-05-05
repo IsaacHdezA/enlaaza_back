@@ -1,10 +1,9 @@
-import { FieldPacket, Pool, QueryResult } from 'mysql2/promise';
 import { connection } from '../config/connection';
 import { Vacancy } from './vacancy';
 
 const vacancyModel = () => {};
 
-vacancyModel.getAllVacancies = async (): Promise<Vacancy[]> => {
+vacancyModel.getAllVacancies = async (): Promise<Vacancy[] | null> => {
   const db = connection.promise();
 
   const sql = `
@@ -16,17 +15,32 @@ vacancyModel.getAllVacancies = async (): Promise<Vacancy[]> => {
     FROM vacante INNER JOIN empresa ON vacante.empresaId = empresa.empresaId;
   `;
 
-  let response: [QueryResult, FieldPacket[]];
-  let vacancies: Vacancy[] = [];
+  let vacancies: Vacancy[] | null = [];
 
   try {
-    response = (await db.execute(sql));
-    vacancies = response[0] as Vacancy[];
+    const [response, ] = (await db.execute(sql));
+    vacancies = response as Vacancy[];
   } catch(e) {
     console.log(`Error: ${e}`);
   }
 
   return vacancies;
+}
+
+vacancyModel.getVacancyById = async (id: number): Promise<Vacancy | null> => {
+  const db = connection.promise();
+  let vacancy: Vacancy | null = null;
+
+  const sql = `SELECT * FROM vacante WHERE vacanteId = ?`;
+
+  try {
+    const [response, ] = (await db.execute(sql, [id]));
+    vacancy = response as any as Vacancy;
+  } catch(e) {
+    console.log(`Error: ${e}`);
+  }
+
+  return vacancy;
 }
 
 export { vacancyModel };
