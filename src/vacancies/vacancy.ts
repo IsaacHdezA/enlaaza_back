@@ -1,8 +1,9 @@
 export interface Vacancy {
+  empresaId: number;
+
   fechaRegistro: string;
   vigencia: string;
   nombreEmpresa: string;
-  rfcEmpresa: string;
   emailEmpresa: string;
   vacanteMatriz: string;
   municipio: string;

@@ -2,12 +2,12 @@ import { Vacancy } from "../../src/vacancies/vacancy";
 import { catalog } from "../../src/utilities/catalog";
 import utils from "../../src/utilities/utils";
 
-function createRandomVacancy(faker: any): Vacancy {
+function createRandomVacancy(faker: any, businessIds: number[] | null): Vacancy {
   return {
+    empresaId:                faker.helpers.arrayElement(businessIds),
     fechaRegistro:            utils.toISODate(faker.date.recent()),
     vigencia:                 utils.toISODate(faker.date.recent()),
     nombreEmpresa:            faker.lorem.words(5),
-    rfcEmpresa:               faker.string.alphanumeric(13),
     emailEmpresa:             faker.internet.email(),
     vacanteMatriz:            faker.lorem.words(3),
     municipio:                faker.location.city(),

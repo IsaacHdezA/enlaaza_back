@@ -1,7 +1,6 @@
 import { Business } from "./business";
 import { businessModel } from "./business.model";
 import { Request, Response } from "express";
-import utils from "../utilities/utils";
 
 const businessControl = () => {};
 
@@ -14,11 +13,11 @@ businessControl.getAllBusinesses = async (req: Request, res: Response) => {
 };
 
 businessControl.getBusinessIds = async (req: Request, res: Response) => {
-	let businesses: number[] | null = [];
+	let ids: number[] | null = [];
 
-	businesses = await businessModel.getBusinessIds();
+	ids = await businessModel.getBusinessIds();
 
-	res.send(businesses);
+	res.send(ids);
 };
 
 export { businessControl };

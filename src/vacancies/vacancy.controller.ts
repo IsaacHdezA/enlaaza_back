@@ -9,7 +9,6 @@ vacancyControl.getAllVacancies = async (req: Request, res: Response) => {
   let vacancies: Vacancy[] | null = [];
 
   vacancies = await vacancyModel.getAllVacancies();
-  console.log(vacancies);
   if(vacancies) {
     vacancies.forEach(vacancy => {
       vacancy.fechaRegistro = utils.toISODate(new Date(vacancy.fechaRegistro));

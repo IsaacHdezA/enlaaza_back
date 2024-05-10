@@ -1,6 +1,7 @@
 import type { PoolConnection } from "mysql2";
 import { Vacancy } from "../../src/vacancies/vacancy"; 
 import { createRandomVacancy } from "../factories/vacancy.factory";
+import { businessModel } from "../../src/business/business.model";
 
 const vacancySeeder = async (db: PoolConnection, faker: any, maxVacancies: number) => {
 	let sql = `INSERT INTO enlaaza_db.vacante(
@@ -47,12 +48,13 @@ const vacancySeeder = async (db: PoolConnection, faker: any, maxVacancies: numbe
       generoPreferible,
       calificacion
 		) VALUES `;
+  const businessIds: number[] | null = await businessModel.getBusinessIds();
 
 	let vacancy: Vacancy;
 	for (let i = 0; i < maxVacancies; i++) {
-		vacancy = createRandomVacancy(faker);
+		vacancy = createRandomVacancy(faker, businessIds);
 		sql += `(
-			1,
+			${vacancy.empresaId},
       "${vacancy.fechaRegistro}",
       "${vacancy.vigencia}",
       ${vacancy.vacanteMatriz ? 1 : 0},

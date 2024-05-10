@@ -6,8 +6,8 @@ import { vacancySeeder } from "./seeders/vacancy.seeder";
 import { businessSeeder } from "./seeders/business.seeder";
 
 const MAX_USERS: number = 1000;
-const MAX_VACANCIES: number = 1000;
 const MAX_BUSINESSES: number = 50;
+const MAX_VACANCIES: number = 10000;
 
 connection.getConnection(
   async (error: Error | null, connection: PoolConnection) => {
@@ -15,15 +15,12 @@ connection.getConnection(
 
     console.log(`Creating ${MAX_USERS} dummy users...`);
     await userSeeder(connection, faker, MAX_USERS);
-    console.log(`Dummy users generated!`);
     
-    console.log(`Creating ${MAX_BUSINESSES} dummy users...`);
-    await businessSeeder(connection, faker, MAX_BUSINESSES);
-    console.log(`Dummy businesses generated!`);
-
-    console.log(`Creating ${MAX_VACANCIES} dummy vacancies...`);
-    await vacancySeeder(connection, faker, MAX_VACANCIES);
-    console.log(`Dummy vacancies generated!`);
+    console.log(`Creating ${MAX_BUSINESSES} dummy businesses...`);
+    businessSeeder(connection, faker, MAX_BUSINESSES).then(async (res) => {
+      console.log(`Creating ${MAX_VACANCIES} dummy vacancies...`);
+      await vacancySeeder(connection, faker, MAX_VACANCIES);
+    });
 
     connection.release();
   }
