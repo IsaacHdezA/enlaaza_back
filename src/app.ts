@@ -6,6 +6,7 @@ import morgan from "morgan";
 
 import { route as user_route } from "./user/user.routes";
 import { route as vacancy_route } from "./vacancies/vacancy.routes";
+import { route as business_route } from "./business/business.routes";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/users/", user_route);
 app.use("/vacancies/", vacancy_route);
+app.use("/businesses/", business_route);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
