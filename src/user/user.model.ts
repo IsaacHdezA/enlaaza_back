@@ -4,35 +4,35 @@ import { User } from './user';
 const userModel = () => {};
 
 userModel.getAllUsers = async (): Promise<User[] | null> => {
-	const db = connection.promise();
-	let users: User[] | null = [];
+  const db = connection.promise();
+  let users: User[] | null = [];
 
-	const sql = `SELECT * FROM usuario;`;
+  const sql = `SELECT * FROM usuario;`;
 
-	try {
-		const [response, ] = (await db.execute(sql));
-		users = response as User[];
-	} catch(e) {
-		console.log(`Error: ${e}`);
-	}
+  try {
+    const [response, ] = (await db.execute(sql));
+    users = response as User[];
+  } catch(e) {
+    console.log(`Error: ${e}`);
+  }
 
-	return users;
+  return users;
 }
 
 userModel.getUserById = async (id: number): Promise<User | null> => {
-	const db = connection.promise();
-	let user: User | null = null;
+  const db = connection.promise();
+  let user: User | null = null;
 
-	const sql = `SELECT * FROM usuario WHERE userId = ?`;
+  const sql = `SELECT * FROM usuario WHERE userId = ?`;
 
-	try {
-		const [response, ] = (await db.execute(sql, [id]))
-		user = response as any as User;
-	} catch(e) {
-		console.log(`Error: ${e}`);
-	}
+  try {
+    const [response, ] = (await db.execute(sql, [id]))
+    user = response as any as User;
+  } catch(e) {
+    console.log(`Error: ${e}`);
+  }
 
-	return user;
+  return user;
 }
 
 export { userModel };

@@ -3,8 +3,8 @@ import { Vacancy } from "../../src/vacancies/vacancy";
 import { createRandomVacancy } from "../factories/vacancy.factory";
 
 const vacancySeeder = async (db: PoolConnection, faker: any, maxVacancies: number) => {
-	let sql = `INSERT INTO enlaaza_db.vacante(
-			empresaId,
+  let sql = `INSERT INTO enlaaza_db.vacante(
+      empresaId,
       fechaRegistro,
       vigencia,
       vacanteMatriz,
@@ -46,13 +46,13 @@ const vacancySeeder = async (db: PoolConnection, faker: any, maxVacancies: numbe
       tipoSueldo,
       generoPreferible,
       calificacion
-		) VALUES `;
+    ) VALUES `;
 
-	let vacancy: Vacancy;
-	for (let i = 0; i < maxVacancies; i++) {
-		vacancy = createRandomVacancy(faker);
-		sql += `(
-			1,
+  let vacancy: Vacancy;
+  for (let i = 0; i < maxVacancies; i++) {
+    vacancy = createRandomVacancy(faker);
+    sql += `(
+      1,
       "${vacancy.fechaRegistro}",
       "${vacancy.vigencia}",
       ${vacancy.vacanteMatriz ? 1 : 0},
@@ -94,13 +94,13 @@ const vacancySeeder = async (db: PoolConnection, faker: any, maxVacancies: numbe
       "${vacancy.tipoSueldo}",
       "${vacancy.generoPreferible}",
       ${vacancy.calificacion}),`;
-	}
-	sql = sql.slice(0, sql.length - 1);
+  }
+  sql = sql.slice(0, sql.length - 1);
 
-	await db.execute(sql, (error) => {
-		if (error) console.log("Error in vacancy.seeder: " + error);
-		else console.log("Successfully created dummy data for vacancies");
-	});
+  await db.execute(sql, (error) => {
+    if (error) console.log("Error in vacancy.seeder: " + error);
+    else console.log("Successfully created dummy data for vacancies");
+  });
 };
 
 export { vacancySeeder };

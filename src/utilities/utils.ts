@@ -9,7 +9,7 @@ utils.generateArray = <T>(max: number, data: Array<T>): Array<T> => {
   let arr: Array<T> = [];
 
   for(let i = 0; i < max; i++)
-		arr.push(data[utils.randomInt(0, DATA_LEN)]);
+    arr.push(data[utils.randomInt(0, DATA_LEN)]);
 
   return arr;
 }
