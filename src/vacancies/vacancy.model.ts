@@ -35,7 +35,7 @@ vacancyModel.getVacancyById = async (id: number): Promise<Vacancy | null> => {
 
   try {
     const [response, ] = (await db.execute(sql, [id]));
-    vacancy = response as any as Vacancy;
+    if(Array.isArray(response)) vacancy = response[0] as any as Vacancy;
   } catch(e) {
     console.log(`Error: ${e}`);
   }

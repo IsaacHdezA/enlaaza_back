@@ -19,6 +19,22 @@ businessModel.getAllBusinesses = async (): Promise<Business[] | null> => {
 	return businesses;
 }
 
+businessModel.getBusinessById = async (id: number): Promise<Business | null> => {
+	const db = connection.promise();
+	let business: Business | null = null;
+
+	const sql = "SELECT * FROM empresa WHERE empresaId = ?";
+
+	try {
+		const [response, ] = (await db.execute(sql, [id]));
+		if(Array.isArray(response)) business = response[0] as any as Business;
+	} catch (e) {
+		console.log(`Error: ${e}`);		
+	}
+
+	return business;
+}
+
 businessModel.getBusinessIds = async (): Promise<number[] | null> => {
 	const db = connection.promise();
 	let ids: number[] | null = [];

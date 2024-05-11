@@ -27,7 +27,7 @@ userModel.getUserById = async (id: number): Promise<User | null> => {
 
   try {
     const [response, ] = (await db.execute(sql, [id]))
-    user = response as any as User;
+    if(Array.isArray(response)) user = response[0] as User;
   } catch(e) {
     console.log(`Error: ${e}`);
   }
