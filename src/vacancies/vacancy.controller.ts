@@ -2,14 +2,17 @@ import { Vacancy } from "./vacancy";
 import { vacancyModel } from "./vacancy.model";
 import { Request, Response } from "express";
 import utils from "../utilities/utils";
+import { Pager } from "../utilities/pager";
 
 const vacancyControl = () => {};
 
 vacancyControl.getAllVacancies = async (req: Request, res: Response) => {
-  let vacancies: Vacancy[] | null = [];
+  const itemsPerPage = parseInt(req.params.perPage);
+  const page = parseInt(req.params.page) <= 0 ? 0 : parseInt(req.params.page) - 1;
 
-  vacancies = await vacancyModel.getAllVacancies();
-  vacancies!.forEach(vacancy => {
+  let pager: Pager<Vacancy> = await vacancyModel.getAllVacancies(itemsPerPage, page);
+
+  pager.data!.forEach(vacancy => {
     vacancy.fechaRegistro = utils.toISODate(new Date(vacancy.fechaRegistro));
     vacancy.vigencia = utils.toISODate(new Date(vacancy.vigencia));
 
@@ -19,7 +22,7 @@ vacancyControl.getAllVacancies = async (req: Request, res: Response) => {
     vacancy.prestaciones = (vacancy.prestaciones as any as string).split(",");
   });
 
-  res.send(vacancies);
+  res.send(pager);
 };
 
 vacancyControl.getVacancyById = async (req: Request, res: Response) => {

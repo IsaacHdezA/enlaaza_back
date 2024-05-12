@@ -9,7 +9,6 @@ if (!process.env.ENV) {
 
 import mysql from "mysql2";
 import { PoolConnection } from "mysql2";
-import { User } from "../user/user";
 
 const environment = process.env.ENV;
 const config = require("./dbConf.json")[environment]["mysql"];

@@ -1,10 +1,15 @@
 import { connection } from '../config/connection';
+import { Pager } from '../utilities/pager';
 import { Vacancy } from './vacancy';
 
 const vacancyModel = () => {};
 
-vacancyModel.getAllVacancies = async (): Promise<Vacancy[] | null> => {
+vacancyModel.getAllVacancies = async (itemsPerPage: number = 10, page: number = 0): Promise<Pager<Vacancy>> => {
   const db = connection.promise();
+  const offset: number = page * itemsPerPage;
+
+  let pager: Pager<Vacancy> = new Pager<Vacancy>("vacante", itemsPerPage, page);
+  await pager.getPagerData(db);
 
   const sql = `
     SELECT
@@ -12,19 +17,18 @@ vacancyModel.getAllVacancies = async (): Promise<Vacancy[] | null> => {
           CONCAT(TIME_FORMAT(vacante.horarioInicio, "%h:%m") , " - ", TIME_FORMAT(vacante.horarioFin, "%h:%m")) as horario,
           empresa.nombreComercial as nombreEmpresa, empresa.rfc as rfcEmpresa,
           empresa.correoElectronico as emailEmpresa, empresa.sector as area
-    FROM vacante INNER JOIN empresa ON vacante.empresaId = empresa.empresaId;
+    FROM vacante INNER JOIN empresa ON vacante.empresaId = empresa.empresaId
+    ORDER BY vacante.vacanteId ASC LIMIT ? OFFSET ?;
   `;
 
-  let vacancies: Vacancy[] | null = [];
-
   try {
-    const [response, ] = (await db.execute(sql));
-    vacancies = response as Vacancy[];
+    const [response, ] = await db.execute(sql, [itemsPerPage, offset].map(item => item.toString()));
+    pager.data = response as Vacancy[];
   } catch(e) {
     console.log(`Error: ${e}`);
   }
 
-  return vacancies;
+  return pager;
 }
 
 vacancyModel.getVacancyById = async (id: number): Promise<Vacancy | null> => {

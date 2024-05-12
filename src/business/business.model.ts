@@ -27,6 +27,9 @@ businessModel.getBusinessById = async (id: number): Promise<Business | null> => 
 
 	try {
 		const [response, ] = (await db.execute(sql, [id]));
+
+		console.log(response);
+
 		if(Array.isArray(response)) business = response[0] as any as Business;
 	} catch (e) {
 		console.log(`Error: ${e}`);		
