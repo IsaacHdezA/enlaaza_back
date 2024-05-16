@@ -5,11 +5,9 @@ export class Pager<T> {
 	itemsPerPage: number;
 	page: number;
 	totalPages: number;
-	table: string;
 	data: T[];
 
-	constructor(table: string, itemsPerPage: number = -1, page: number = -1) {
-		this.table = table;
+	constructor(itemsPerPage: number = -1, page: number = -1) {
 		this.itemsPerPage = itemsPerPage;
 		this.page = page;
 
@@ -18,8 +16,8 @@ export class Pager<T> {
 		this.data = [];
 	}
 
-	async getPagerData(db: Pool) {
-		let sql = `SELECT COUNT(*) as totalCount FROM ${this.table};`;
+	async getPagerData(db: Pool, table: string) {
+		let sql = `SELECT COUNT(*) as totalCount FROM ${table}`;
 
 		try {
 			const [res, ] = await db.execute(sql);

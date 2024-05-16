@@ -8,8 +8,8 @@ vacancyModel.getAllVacancies = async (itemsPerPage: number = 10, page: number = 
   const db = connection.promise();
   const offset: number = page * itemsPerPage;
 
-  let pager: Pager<Vacancy> = new Pager<Vacancy>("vacante", itemsPerPage, page);
-  await pager.getPagerData(db);
+  let pager: Pager<Vacancy> = new Pager<Vacancy>(itemsPerPage, page);
+  await pager.getPagerData(db, "vacante");
 
   const sql = `
     SELECT
