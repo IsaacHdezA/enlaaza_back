@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { UserRDP } from "./user";
 import { userModel } from "./user.model";
 import { Request, Response } from "express";
 import utils from "../utilities/utils";
@@ -6,7 +6,7 @@ import utils from "../utilities/utils";
 const userControl = () => {};
 
 userControl.getAllUsers = async (req: Request, res: Response) => {
-  let users: User[] | null = [];
+  let users: UserRDP[] | null = [];
 
   users = await userModel.getAllUsers();
   users!.forEach(user => {
@@ -22,7 +22,7 @@ userControl.getAllUsers = async (req: Request, res: Response) => {
 };
 
 userControl.getUserById = async (req: Request, res: Response) => {
-  let user: User | null = null;
+  let user: UserRDP | null = null;
   const id: number = req.params.id as any as number;
 
   user = await userModel.getUserById(id);

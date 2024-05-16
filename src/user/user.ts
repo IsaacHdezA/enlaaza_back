@@ -1,4 +1,6 @@
-export interface User {
+import { RowDataPacket } from "mysql2";
+
+interface User {
   userId?: number;
   fechaRegistro: string;
   motivoRegistro?: string;
@@ -31,4 +33,8 @@ export interface User {
   buscaOpcion3?: string;
   registroExpress?: boolean;
   numeroSeguroSocial?: string;
-}
+};
+
+type UserRDP = User & RowDataPacket;
+
+export { User, UserRDP };

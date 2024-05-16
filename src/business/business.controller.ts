@@ -1,11 +1,11 @@
-import { Business } from "./business";
+import { BusinessRDP } from "./business";
 import { businessModel } from "./business.model";
 import { Request, Response } from "express";
 
 const businessControl = () => {};
 
 businessControl.getAllBusinesses = async (req: Request, res: Response) => {
-	let businesses: Business[] | null = [];
+	let businesses: BusinessRDP[] | null = [];
 
 	businesses = await businessModel.getAllBusinesses();
 
@@ -13,7 +13,7 @@ businessControl.getAllBusinesses = async (req: Request, res: Response) => {
 };
 
 businessControl.getBusinessById = async (req: Request, res: Response) => {
-	let business: Business | null = null;
+	let business: BusinessRDP | null = null;
 	const id: number = req.params.id as any as number;
 
 	business = await businessModel.getBusinessById(id);

@@ -1,4 +1,4 @@
-import { Vacancy } from "./vacancy";
+import { VacancyRDP } from "./vacancy";
 import { vacancyModel } from "./vacancy.model";
 import { Request, Response } from "express";
 import utils from "../utilities/utils";
@@ -10,7 +10,7 @@ vacancyControl.getAllVacancies = async (req: Request, res: Response) => {
   const itemsPerPage = parseInt(req.params.perPage);
   const page = parseInt(req.params.page) <= 0 ? 0 : parseInt(req.params.page) - 1;
 
-  let pager: Pager<Vacancy> = await vacancyModel.getAllVacancies(itemsPerPage, page);
+  let pager: Pager<VacancyRDP> = await vacancyModel.getAllVacancies(itemsPerPage, page);
 
   pager.data!.forEach(vacancy => {
     vacancy.fechaRegistro = utils.toISODate(new Date(vacancy.fechaRegistro));
@@ -26,7 +26,7 @@ vacancyControl.getAllVacancies = async (req: Request, res: Response) => {
 };
 
 vacancyControl.getVacancyById = async (req: Request, res: Response) => {
-  let vacancy: Vacancy | null = null;
+  let vacancy: VacancyRDP | null = null;
   const id: number = req.params.id as any as number;
 
   vacancy = await vacancyModel.getVacancyById(id);

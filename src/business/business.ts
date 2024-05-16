@@ -1,4 +1,6 @@
-export interface Business {
+import { RowDataPacket } from "mysql2";
+
+interface Business {
   fechaRegistro: string;
   verificada: boolean;
   motivoRegistro: string;
@@ -21,4 +23,8 @@ export interface Business {
   tamanoEmpresa: string;
   tipoEmpresa: string;
   tipoSucursal: string;
-}
+};
+
+type BusinessRDP = Business & RowDataPacket;
+
+export { Business, BusinessRDP };

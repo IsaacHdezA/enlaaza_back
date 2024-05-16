@@ -1,14 +1,14 @@
 import { connection } from '../config/connection';
 import { Pager } from '../utilities/pager';
-import { Vacancy } from './vacancy';
+import { VacancyRDP } from './vacancy';
 
 const vacancyModel = () => {};
 
-vacancyModel.getAllVacancies = async (itemsPerPage: number = 10, page: number = 0): Promise<Pager<Vacancy>> => {
+vacancyModel.getAllVacancies = async (itemsPerPage: number = 10, page: number = 0): Promise<Pager<VacancyRDP>> => {
   const db = connection.promise();
   const offset: number = page * itemsPerPage;
 
-  let pager: Pager<Vacancy> = new Pager<Vacancy>(itemsPerPage, page);
+  let pager: Pager<VacancyRDP> = new Pager<VacancyRDP>(itemsPerPage, page);
   await pager.getPagerData(db, "vacante");
 
   const sql = `
@@ -23,7 +23,7 @@ vacancyModel.getAllVacancies = async (itemsPerPage: number = 10, page: number = 
 
   try {
     const [response, ] = await db.execute(sql, [itemsPerPage, offset].map(item => item.toString()));
-    pager.data = response as Vacancy[];
+    pager.data = response as VacancyRDP[];
   } catch(e) {
     console.log(`Error: ${e}`);
   }
@@ -31,15 +31,15 @@ vacancyModel.getAllVacancies = async (itemsPerPage: number = 10, page: number = 
   return pager;
 }
 
-vacancyModel.getVacancyById = async (id: number): Promise<Vacancy | null> => {
+vacancyModel.getVacancyById = async (id: number): Promise<VacancyRDP | null> => {
   const db = connection.promise();
-  let vacancy: Vacancy | null = null;
+  let vacancy: VacancyRDP | null = null;
 
   const sql = `SELECT * FROM vacante WHERE vacanteId = ?`;
 
   try {
     const [response, ] = (await db.execute(sql, [id]));
-    if(Array.isArray(response)) vacancy = response[0] as any as Vacancy;
+    if(Array.isArray(response)) vacancy = response[0] as any as VacancyRDP;
   } catch(e) {
     console.log(`Error: ${e}`);
   }

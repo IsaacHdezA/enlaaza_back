@@ -1,17 +1,17 @@
 import { connection } from "../config/connection";
-import { Business } from "./business";
+import { BusinessRDP } from "./business";
 
 const businessModel = () => {};
 
-businessModel.getAllBusinesses = async (): Promise<Business[] | null> => {
+businessModel.getAllBusinesses = async (): Promise<BusinessRDP[] | null> => {
 	const db = connection.promise();
-	let businesses: Business[] | null = [];
+	let businesses: BusinessRDP[] | null = [];
 
 	const sql = `SELECT * FROM empresa;`;
 
 	try {
 		const [response, ] = (await db.execute(sql));
-		businesses = response as Business[];
+		businesses = response as BusinessRDP[];
 	} catch (e) {
 		console.log(`Error: ${e}`);
 	}
@@ -19,16 +19,16 @@ businessModel.getAllBusinesses = async (): Promise<Business[] | null> => {
 	return businesses;
 }
 
-businessModel.getBusinessById = async (id: number): Promise<Business | null> => {
+businessModel.getBusinessById = async (id: number): Promise<BusinessRDP | null> => {
 	const db = connection.promise();
-	let business: Business | null = null;
+	let business: BusinessRDP | null = null;
 
 	const sql = "SELECT * FROM empresa WHERE empresaId = ?";
 
 	try {
 		const [response, ] = (await db.execute(sql, [id]));
 
-		if(Array.isArray(response)) business = response[0] as any as Business;
+		if(Array.isArray(response)) business = response[0] as any as BusinessRDP;
 	} catch (e) {
 		console.log(`Error: ${e}`);		
 	}

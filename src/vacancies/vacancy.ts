@@ -1,4 +1,6 @@
-export interface Vacancy {
+import { RowDataPacket } from "mysql2";
+
+interface Vacancy {
   empresaId: number;
 
   fechaRegistro: string;
@@ -48,4 +50,8 @@ export interface Vacancy {
   generoPreferible?: string;
 
   calificacion: number;
-}
+};
+
+type VacancyRDP = Vacancy & RowDataPacket;
+
+export { Vacancy, VacancyRDP };
