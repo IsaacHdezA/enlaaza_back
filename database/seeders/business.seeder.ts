@@ -3,6 +3,7 @@ import { Business } from "../../src/business/business";
 import { createRandomBusiness } from "../factories/business.factory";
 
 const businessSeeder = async (db: PoolConnection, faker: any, maxBusinesses: number) => {
+  console.log(`Creating ${maxBusinesses} dummy businesses...`);
   let sql = `INSERT INTO empresa (
     fechaRegistro,
     verificada,
@@ -60,9 +61,12 @@ const businessSeeder = async (db: PoolConnection, faker: any, maxBusinesses: num
 
   sql = sql.slice(0, sql.length - 1);
 
-  await db.execute(sql, (error) => {
-    if(error) console.log("Error in business.seeder: " + error);
-    else console.log("Succesfully created dummy data for businesses");
+  return new Promise((resolve) => {
+    db.execute(sql, (error) => {
+      if(error) console.log("Error in business.seeder: " + error);
+      else console.log("Succesfully created dummy data for businesses");
+      resolve(true)
+    });
   });
 }
 

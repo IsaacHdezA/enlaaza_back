@@ -3,6 +3,8 @@ import { User } from "../../src/user/user";
 import { createRandomUser } from "../factories/user.factory";
 
 const userSeeder = async (db: PoolConnection, faker: any, maxUsers: number) => {
+  console.log(`Creating ${maxUsers} dummy users...`);
+
   let sql = `
     INSERT INTO enlaaza_db.usuario(
       fechaRegistro,
@@ -74,10 +76,13 @@ const userSeeder = async (db: PoolConnection, faker: any, maxUsers: number) => {
   }
   sql = sql.slice(0, sql.length - 1);
 
-  await db.execute(sql, (error) => {
-    if (error) console.log("Error in user.seeder: " + error);
-    else console.log("Succesfully created dummy data for users");
-  });
+  return new Promise<boolean>((resolve) => {
+    db.execute(sql, (error) => {
+      if (error) console.log("Error in user.seeder: " + error);
+      else console.log("Succesfully created dummy data for users");
+      resolve(true)
+    });
+  })
 };
 
 export { userSeeder };

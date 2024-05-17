@@ -4,6 +4,7 @@ import { createRandomVacancy } from "../factories/vacancy.factory";
 import { businessModel } from "../../src/business/business.model";
 
 const vacancySeeder = async (db: PoolConnection, faker: any, maxVacancies: number) => {
+    console.log(`Creating ${maxVacancies} dummy vacancies...`);
 	let sql = `INSERT INTO enlaaza_db.vacante(
 			empresaId,
       fechaRegistro,
@@ -99,10 +100,13 @@ const vacancySeeder = async (db: PoolConnection, faker: any, maxVacancies: numbe
 	}
 	sql = sql.slice(0, sql.length - 1);
 
-	await db.execute(sql, (error) => {
-		if (error) console.log("Error in vacancy.seeder: " + error);
-		else console.log("Successfully created dummy data for vacancies");
-	});
+      return new Promise<boolean>((resolve) => {
+            db.execute(sql, (error) => {
+                  if (error) console.log("Error in vacancy.seeder: " + error);
+                  else console.log("Successfully created dummy data for vacancies");
+                  resolve(true)
+            });
+      })
 };
 
 export { vacancySeeder };

@@ -9,19 +9,20 @@ const MAX_USERS: number = 1000;
 const MAX_BUSINESSES: number = 50;
 const MAX_VACANCIES: number = 10000;
 
-connection.getConnection(
-  async (error: Error | null, connection: PoolConnection) => {
-    if (error) throw error;
-
-    console.log(`Creating ${MAX_USERS} dummy users...`);
-    await userSeeder(connection, faker, MAX_USERS);
-    
-    console.log(`Creating ${MAX_BUSINESSES} dummy businesses...`);
-    businessSeeder(connection, faker, MAX_BUSINESSES).then(async (res) => {
-      console.log(`Creating ${MAX_VACANCIES} dummy vacancies...`);
-      await vacancySeeder(connection, faker, MAX_VACANCIES);
-    });
-
-    connection.release();
-  }
-);
+(async() => {
+  return new Promise<boolean>((resolve) => {
+    connection.getConnection(
+      async (error: Error | null, conn: PoolConnection) => {
+        if (error) throw error;
+        await userSeeder(conn, faker, MAX_USERS);
+        await businessSeeder(conn, faker, MAX_BUSINESSES);
+        await vacancySeeder(conn, faker, MAX_VACANCIES);
+        conn.release()
+        resolve(true)
+      }
+    );
+  })
+})().then(() => {
+  console.log('Records saved successfully!!');
+  connection.end();
+});
