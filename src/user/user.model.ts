@@ -1,22 +1,26 @@
 import { connection } from '../config/connection';
+import { Pager } from '../utilities/pager';
 import { UserRDP } from './user';
 
 const userModel = () => {};
 
-userModel.getAllUsers = async (): Promise<UserRDP[] | null> => {
+userModel.getAllUsers = async (itemsPerPage: number = 10, page: number = 0): Promise<Pager<UserRDP>> => {
   const db = connection.promise();
-  let users: UserRDP[] | null = [];
+  const offset: number = (page - 1) * itemsPerPage;
 
-  const sql = `SELECT * FROM usuario;`;
+  let pager: Pager<UserRDP> = new Pager<UserRDP>(itemsPerPage, page);
+  await pager.getPagerData(db, "usuario");
+
+  const sql = `SELECT * FROM usuario ORDER BY usuario.userId ASC LIMIT ? OFFSET ?;`;
 
   try {
-    const [response, ] = (await db.execute(sql));
-    users = response as UserRDP[];
+    const [response, ] = (await db.execute(sql, [itemsPerPage, offset].map(item => item.toString())));
+    pager.data = response as UserRDP[];
   } catch(e) {
     console.log(`Error: ${e}`);
   }
 
-  return users;
+  return pager;
 }
 
 userModel.getUserById = async (id: number): Promise<UserRDP | null> => {

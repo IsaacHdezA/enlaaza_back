@@ -2,14 +2,17 @@ import { UserRDP } from "./user";
 import { userModel } from "./user.model";
 import { Request, Response } from "express";
 import utils from "../utilities/utils";
+import { Pager } from "../utilities/pager";
 
 const userControl = () => {};
 
 userControl.getAllUsers = async (req: Request, res: Response) => {
-  let users: UserRDP[] | null = [];
+  const itemsPerPage = parseInt(req.params.perPage);
+  const page = parseInt(req.params.page) <= 1 ? 1 : parseInt(req.params.page);
 
-  users = await userModel.getAllUsers();
-  users!.forEach(user => {
+  let pager: Pager<UserRDP> = await userModel.getAllUsers(itemsPerPage, page);
+
+  pager.data!.forEach(user => {
     user.fechaRegistro = utils.toISODate(new Date(user.fechaRegistro));
     user.fecNac = utils.toISODate(new Date(user.fecNac));
 
@@ -18,7 +21,7 @@ userControl.getAllUsers = async (req: Request, res: Response) => {
     user.habilidadesTecnicas = (user.habilidadesTecnicas as any as string).split(",");
   });
 
-  res.send(users);
+  res.send(pager);
 };
 
 userControl.getUserById = async (req: Request, res: Response) => {
