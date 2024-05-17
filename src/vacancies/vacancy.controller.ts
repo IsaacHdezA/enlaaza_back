@@ -8,7 +8,7 @@ const vacancyControl = () => {};
 
 vacancyControl.getAllVacancies = async (req: Request, res: Response) => {
   const itemsPerPage = parseInt(req.params.perPage);
-  const page = parseInt(req.params.page) <= 0 ? 0 : parseInt(req.params.page) - 1;
+  const page = parseInt(req.params.page) <= 1 ? 1 : parseInt(req.params.page);
 
   let pager: Pager<VacancyRDP> = await vacancyModel.getAllVacancies(itemsPerPage, page);
 

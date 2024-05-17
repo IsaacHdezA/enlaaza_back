@@ -6,7 +6,7 @@ const vacancyModel = () => {};
 
 vacancyModel.getAllVacancies = async (itemsPerPage: number = 10, page: number = 0): Promise<Pager<VacancyRDP>> => {
   const db = connection.promise();
-  const offset: number = page * itemsPerPage;
+  const offset: number = (page - 1) * itemsPerPage;
 
   let pager: Pager<VacancyRDP> = new Pager<VacancyRDP>(itemsPerPage, page);
   await pager.getPagerData(db, "vacante");
